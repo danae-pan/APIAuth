@@ -46,7 +46,23 @@
 
     MongoDB stores user credentials and role information in BSON format. The Users collection holds user information, including username, password hash, and roles. 
 
-    The MongoDbService connects to MongoDB using the connection string specified in the appsettings.json file.
+    In this setup, MongoDB runs inside a Docker container, and it connects to the Web API. To get MongoDB up and running using Docker, follow these commands: 
+
+    ```bash 
+    docker pull mongo:latest
+    docker run -d -p 27017:27017 --name mongoauthdb mongo:latest
+    ```
+    This starts MongoDB on port 27017 and names the container mongoauthdb.
+
+    Next, add the MongoDB connection settings to the appsettings.json file:
+
+    ```json
+    "MongoDB": {
+    "ConnectionString": "mongodb://localhost:27017",
+    "DatabaseName": "UserCredentialsDB"
+    },
+    ```
+    The MongoDbService connects to MongoDB using the connection string specified in the ```appsettings.json``` file.
 
     ```csharp
 
